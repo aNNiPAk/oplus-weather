@@ -8,20 +8,22 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: Extract and verify without publishing
+        description: Scan donor OTAs without publishing
         type: boolean
         default: true
-      ota_url_override:
-        description: Optional full OTA URL
-        type: string
-        required: false
+      max_donors:
+        description: Maximum number of donor OTAs
+        type: number
+        default: 6
 permissions:
   contents: write
 jobs:
   update:
-    uses: aNNiPAk/oplus-stock-app-bot/.github/workflows/update.yml@main
+    uses: aNNiPAk/oplus-stock-app-bot/.github/workflows/update-stock-app.yml@main
     with:
-      app_repository: oplus-weather
-      allow_publication: true
+      package_name: com.coloros.weather2
+      max_donors: ${{ inputs.max_donors || 6 }}
+      stable_locale: ru
+      fallback_locale: en
+      major_os: '16'
       dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
-      ota_url_override: ${{ inputs.ota_url_override || '' }}
