@@ -23,5 +23,5 @@ jobs:
     with:
       app_repository: oplus-weather
       allow_publication: true
-      dry_run: true
+      dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
       ota_url_override: ${{ inputs.ota_url_override || '' }}
