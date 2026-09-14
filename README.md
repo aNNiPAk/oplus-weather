@@ -1,13 +1,24 @@
 # OPlus weather
 
-Unmodified stock APK for `com.coloros.weather2`, extracted from the original OPlus firmware.
+Канал исходного stock APK `com.coloros.weather2` для Obtainium.
 
-## Updates
+Источник выбирается из свежих OTA разных **OPPO, OnePlus и realme**. По умолчанию проверяются до шести доноров; победитель определяется по реальному Android `versionCode`.
 
-The updater checks the official OTA source daily. To check manually, open Actions → Update OPlus weather → Run workflow. Leave `dry_run` enabled to verify without publishing; disable it to publish a newer verified version.
+- **Обычный релиз:** базовый APK содержит русский.
+- **Prerelease (`-exp`):** более новый APK без русского, с английским либо неизвестным языком ресурсов.
+- APK только с другими явно указанными языками не публикуется.
+- Подпись проверяется; SHA-256 сертификата записывается, но смена сертификата не блокирует обновление.
+- Overlays, `uses-library` и native библиотеки записываются в отчёт для диагностики.
 
-Each release contains one unchanged APK, its version, signing certificate SHA-256, APK SHA-256, and firmware source path. Updates with a changed signing certificate are refused.
 
-Use this repository URL as a GitHub source in Obtainium. No personal access token is required by the updater.
+## Запуск
 
-Updater: [oplus-stock-app-bot](https://github.com/aNNiPAk/oplus-stock-app-bot).
+Daily schedule включён. Для ручной проверки: Actions → Update OPlus weather → Run workflow → оставить `dry_run: true`. Для публикации отключить `dry_run`.
+
+Workflow сначала выполняет dry-run, затем повторно проверяет выбранные APK и публикует их без второго извлечения OTA. Встроенный `GITHUB_TOKEN` этого канала публикует в этот же репозиторий; PAT не требуется.
+
+Добавьте URL репозитория в Obtainium как GitHub source. Отключённые prereleases оставят вас на stable с русским; включайте их для experimental версий.
+
+Каждый релиз содержит один неизменённый APK, его SHA-256, сертификат, языки и точный источник прошивки.
+
+[Код и политика выбора доноров](https://github.com/aNNiPAk/oplus-stock-app-bot).
