@@ -1,0 +1,27 @@
+name: Update OPlus weather
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/update.yml]
+  schedule:
+    - cron: '33 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Extract and verify without publishing
+        type: boolean
+        default: true
+      ota_url_override:
+        description: Optional full OTA URL
+        type: string
+        required: false
+permissions:
+  contents: write
+jobs:
+  update:
+    uses: aNNiPAk/oplus-stock-app-bot/.github/workflows/update.yml@main
+    with:
+      app_repository: oplus-weather
+      allow_publication: true
+      dry_run: true
+      ota_url_override: ${{ inputs.ota_url_override || '' }}
